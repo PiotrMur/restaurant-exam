@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -17,7 +19,7 @@ class RestaurantTest {
 
     @BeforeEach
     void setUp(){
-        restaurant = new Restaurant(3,true,4);
+        restaurant = new Restaurant(3,true,4, new HashSet<>());
     }
 
     @Test
@@ -28,9 +30,9 @@ class RestaurantTest {
     @Test
     void shouldAddNewEmployee() {
         //given
-        Employee karol = new Employee("Karol Okrasa", "Chef", "100 PLN");
-        Employee alina = new Employee("Alina Michalska", "Waitress", "30 PLN");
-        Employee robert = new Employee("Robert Maklowicz", "Cook", "50 PLN");
+        Employee karol = new Employee("Karol Okrasa", "Chef", new BigDecimal(100));
+        Employee alina = new Employee("Alina Michalska", "Waitress", new BigDecimal(30));
+        Employee robert = new Employee("Robert Maklowicz", "Cook", new BigDecimal(50));
         //when
         restaurant.addEmployee(karol);
         //then
@@ -39,7 +41,7 @@ class RestaurantTest {
 
     @Test
     void shouldThrowExceptionWhenAddingDuplicateEmployee(){
-        Employee karol = new Employee("Karol Okrasa", "Chef", "100 PLN");
+        Employee karol = new Employee("Karol Okrasa", "Chef", new BigDecimal(100));
 
         restaurant.addEmployee(karol);
 
@@ -51,7 +53,7 @@ class RestaurantTest {
     @ParameterizedTest
     @ValueSource(strings = {"karoL Okrasa", "KAROL OkrASA", "Karol okrasa","kARoL oKRasa"})
     void shouldReturnEmployeesSalaryWhenProvidedWithName(String name){
-        Employee karol = new Employee("Karol Okrasa", "Chef", "100 PLN");
+        Employee karol = new Employee("Karol Okrasa", "Chef", new BigDecimal(45));
         restaurant.addEmployee(karol);
 
         String salary = restaurant.getEmployeeSalary(name);

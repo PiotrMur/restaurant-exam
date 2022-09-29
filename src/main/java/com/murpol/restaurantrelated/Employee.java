@@ -1,19 +1,17 @@
 package com.murpol.restaurantrelated;
 
-public class Employee {
+import java.math.BigDecimal;
 
-    private String fullName;
-    private String position;
-    private String salaryPerHour;
+class Employee {
 
-    public Employee(String fullName, String position, String salaryPerHour) {
+    String fullName;
+    String position;
+    BigDecimal salaryPerHour;
+
+    public Employee(String fullName, String position, BigDecimal salaryPerHour) {
         this.fullName = fullName;
         this.position = position;
         this.salaryPerHour = salaryPerHour;
-    }
-
-    public void printEmployeeData() {
-        System.out.println(getFullName() + " is working as a " + getPosition() + " with salary per hour: " + getSalaryPerHour());
     }
 
     public String getFullName() {
@@ -32,20 +30,20 @@ public class Employee {
         this.position = position;
     }
 
-    public String getSalaryPerHour() {
+    public BigDecimal getSalaryPerHour() {
         return salaryPerHour;
     }
 
-    public void setSalaryPerHour(String salaryPerHour) {
+    public void setSalaryPerHour(BigDecimal salaryPerHour) {
         this.salaryPerHour = salaryPerHour;
     }
 
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "fullName='" + fullName + '\'' +
-                ", position='" + position + '\'' +
-                ", salaryPerHour='" + salaryPerHour + '\'' +
-                '}';
+    public void printEmployee(){
+        System.out.println(new StringBuilder(fullName)
+                .append(" works as a ")
+                .append(position)
+                .append(" and earns ")
+                .append(salaryPerHour.toPlainString())
+                .append(" PLN"));
     }
 }

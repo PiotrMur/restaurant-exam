@@ -1,6 +1,6 @@
 package com.murpol.restaurantrelated;
 
-public class Building {
+abstract class Building {
 
     private Integer roomsNumber;
     private boolean isKitchen;
@@ -10,16 +10,6 @@ public class Building {
         this.roomsNumber = roomsNumber;
         this.isKitchen = isKitchen;
         this.bathroomNumber = bathroomNumber;
-    }
-
-    public void displayBuildingStatus(){
-        System.out.println("*** Building status ***");
-        if (getIsKitchen()) {
-            System.out.println("Building has " + roomsNumber + " room(s) and kitchen. Also with " + bathroomNumber + " bathroom(s).");
-        } else {
-            System.out.println("Building has " + roomsNumber + " room(s) and no kitchen. Also with " + bathroomNumber + " bathroom(s).");
-        }
-        System.out.println("*** End of building status ***");
     }
 
     public Integer getRoomsNumber() {
@@ -48,10 +38,9 @@ public class Building {
 
     @Override
     public String  toString() {
-        return "Building{" +
-                "roomsNumber=" + roomsNumber +
-                ", kitchen=" + isKitchen +
-                ", bathroomNumber=" + bathroomNumber +
-                '}';
+        return String.format("""
+                *** Building status ***
+                Building has %d room(s) and %s kitchen. There are also %d bathroom(s)
+                "*** End of building status ***""",roomsNumber, isKitchen ? "" : "no",bathroomNumber );
     }
 }

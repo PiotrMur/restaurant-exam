@@ -6,25 +6,27 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
-import static org.assertj.core.api.Assertions.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
-class MenuMapMethodsImplementationTest {
+class MenuTest {
 
-    private MenuMapMethodsImplementation mapMethodsImplementation;
+    private Menu menuClass;
     private Map<Integer, MenuItem> menu;
 
     @BeforeEach
-    void setUp(){
-        mapMethodsImplementation = new MenuMapMethodsImplementation();
+    void setUp() {
+        menuClass = new Menu();
         menu = new HashMap<>();
     }
 
 
     @Test
-    void shouldMenuBeEmpty(){
+    void shouldMenuBeEmpty() {
 
         //when
         assertThat(menu).isEmpty();
@@ -34,13 +36,13 @@ class MenuMapMethodsImplementationTest {
     @Disabled
     void shouldAddItemsToMenu() {
         //given
-        MenuItem frytki = new MenuItem("Frytki", "Posiekane i upieczone ziemniaki", "14 PLN");
-        MenuItem burger = new MenuItem("Burger", "Posiekane i upieczone ziemniaki", "34 PLN");
-        MenuItem pizza = new MenuItem("Pizza", "Posiekane i upieczone ziemniaki", "41 PLN");
+        MenuItem frytki = new MenuItem("Frytki", "Posiekane i upieczone ziemniaki", new BigDecimal(14));
+        MenuItem burger = new MenuItem("Burger", "Posiekane i upieczone ziemniaki", new BigDecimal(34));
+        MenuItem pizza = new MenuItem("Pizza", "Posiekane i upieczone ziemniaki", new BigDecimal(41));
         //when
-        mapMethodsImplementation.addMenuItems(menu,frytki);
-        mapMethodsImplementation.addMenuItems(menu,burger);
-        mapMethodsImplementation.addMenuItems(menu,pizza);
+        menuClass.addMenuItems(frytki);
+        menuClass.addMenuItems(burger);
+        menuClass.addMenuItems(pizza);
 
         //then
         assertThat(menu.containsKey(2)).isTrue();
@@ -54,14 +56,14 @@ class MenuMapMethodsImplementationTest {
     void shouldReturnPriceIfGivenItemName(String itemName) {
         //given
 
-        MenuItem frytki = new MenuItem("Frytki", "Posiekane i upieczone ziemniaki", "14 PLN");
+        MenuItem frytki = new MenuItem("Frytki", "Posiekane i upieczone ziemniaki", new BigDecimal(41));
 
-        menu.put(1, frytki);
+        menuClass.addMenuItems(frytki);
 
         //when
 
         //then
-        assertThat(mapMethodsImplementation.fetchPriceOfMenuItemByName(menu, itemName)).isEqualTo("14 PLN");
+        assertThat(menuClass.fetchPriceOfMenuItemByName(itemName)).isEqualTo(new MenuItem("Frytki", "Posiekane i upieczone ziemniaki", new BigDecimal(41)).getItemPrice().toPlainString());
     }
 
     @Test

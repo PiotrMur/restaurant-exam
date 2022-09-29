@@ -1,12 +1,14 @@
 package com.murpol.restaurantrelated;
 
-public class MenuItem {
+import java.math.BigDecimal;
 
-    private String itemName;
-    private String itemDescription;
-    private String itemPrice;
+class MenuItem {
 
-    public MenuItem(String itemName, String itemDescription, String itemPrice) {
+    String itemName;
+    String itemDescription;
+    BigDecimal itemPrice;
+
+    public MenuItem(String itemName, String itemDescription, BigDecimal itemPrice) {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.itemPrice = itemPrice;
@@ -28,20 +30,18 @@ public class MenuItem {
         this.itemDescription = itemDescription;
     }
 
-    public String getItemPrice() {
+    public BigDecimal getItemPrice() {
         return itemPrice;
     }
 
-    public void setItemPrice(String itemPrice) {
+    public void setItemPrice(BigDecimal itemPrice) {
         this.itemPrice = itemPrice;
     }
 
     @Override
     public String toString() {
-        return "MenuItem{" +
-                "itemName='" + itemName + '\'' +
-                ", itemDescription='" + itemDescription + '\'' +
-                ", itemPrice=" + itemPrice +
-                '}';
+        return String.format("""
+                %s "%s" with price: %s PLN
+                """,itemName, itemDescription, itemPrice.toPlainString());
     }
 }

@@ -1,29 +1,44 @@
 package com.murpol.restaurantrelated;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
-public class Menu extends MenuMapMethodsImplementation {
+class Menu {
 
-    private Map<Integer, MenuItem> menu;
+    final Map<Integer, MenuItem> menu;
+    int indexPosition = 0;
 
     public Menu() {
         this.menu = new HashMap<>();
     }
 
-    @Override
-    public void addMenuItems(Map<Integer, MenuItem> menu, MenuItem menuItem) {
-        super.addMenuItems(menu, menuItem);
+    public void addMenuItems(MenuItem menuItem) {
+        menu.put(++indexPosition, menuItem);
+        System.out.println(menuItem.getItemName() + " was added into the menu at position " + indexPosition);
     }
 
-    @Override
-    public String fetchPriceOfMenuItemByName(Map<Integer, MenuItem> menu, String itemName) {
-        return super.fetchPriceOfMenuItemByName(menu, itemName);
+    public BigDecimal fetchPriceOfMenuItemByName(String itemName) {
+
+        Optional<BigDecimal> desiredMenuItemPrice = menu.values()
+                .stream()
+                .filter(menuItem -> menuItem.getItemName().equalsIgnoreCase(itemName))
+                .map(MenuItem::getItemPrice)
+                .findFirst();
+
+        if (desiredMenuItemPrice.isEmpty()) {
+            throw new NullPointerException("There is no [" + itemName + "] in Menu");
+        }
+        return desiredMenuItemPrice.get();
     }
 
-    @Override
-    public void printEntireMenu(Map<Integer, MenuItem> menu) {
-        super.printEntireMenu(menu);
+    public void printEntireMenu() {
+        System.out.println("*** Restaurant Menu ***");
+        menu.forEach((key, value) ->
+                System.out.println(key + ". " + value.getItemName() + " " + value.getItemDescription() + " item's price: " + value.getItemPrice())
+        );
+        System.out.println("*** End of restaurant menu ***");
     }
 
     public Map<Integer, MenuItem> getMenu() {
